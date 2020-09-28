@@ -1,0 +1,10 @@
+Para el Informe del taller2
+
+Explicar por que decidimos hacer lo que hicimos en el MERGE. Por ejemplo.
+
+Explicar la Aritmetica de las Operaciones:
+	: Zero + NotZero = NotZero
+	: Zero + Zero = Zero
+	: MaybeZero + Zero = MaybeZero
+	: MaybeZero + MaybeZero = MaybeZero
+	...etc

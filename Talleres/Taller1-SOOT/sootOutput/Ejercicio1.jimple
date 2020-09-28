@@ -1,0 +1,79 @@
+public class Ejercicio1 extends java.lang.Object
+{
+/*Ejercicio1.java*/
+
+/*0*/
+    public void <init>()
+    {
+        Ejercicio1 this;
+
+        this := @this: Ejercicio1;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+/*1*/
+/*this has reaching def: this := @this: Ejercicio1*/
+
+        return;
+/*1*/
+    }
+
+/*3*/
+    public int exercise1(java.lang.String[])
+    {
+        Ejercicio1 this;
+        java.lang.String[] args;
+        int $stack4, c#3, a#8;
+        byte a;
+
+        this := @this: Ejercicio1;
+
+        args := @parameter0: java.lang.String[];
+
+        a = 8;
+/*4*/
+
+        $stack4 = lengthof args;
+/*5*/
+/*args has reaching def: args := @parameter0: java.lang.String[]*/
+
+        if $stack4 <= 2 goto label1;
+/*5*/
+/*$stack4 has reaching def: $stack4 = lengthof args*/
+
+        a = 5;
+/*6*/
+
+     label1:
+        c#3 = 1;
+/*8*/
+/*8*/
+
+     label2:
+        if c#3 > a goto label3;
+/*9*/
+/*c#3 has reaching def: c#3 = 1*/
+/*c#3 has reaching def: c#3 = c#3 + 2*/
+/*a has reaching def: a = 8*/
+/*a has reaching def: a = 5*/
+
+        c#3 = c#3 + 2;
+/*10*/
+/*c#3 has reaching def: c#3 = 1*/
+/*c#3 has reaching def: c#3 = c#3 + 2*/
+
+        goto label2;
+/*10*/
+
+     label3:
+        a#8 = c#3 - a;
+/*12*/
+/*c#3 has reaching def: c#3 = 1*/
+/*c#3 has reaching def: c#3 = c#3 + 2*/
+/*a has reaching def: a = 8*/
+/*a has reaching def: a = 5*/
+
+        return a#8;
+/*13*/
+/*a#8 has reaching def: a#8 = c#3 - a*/
+    }
+}
