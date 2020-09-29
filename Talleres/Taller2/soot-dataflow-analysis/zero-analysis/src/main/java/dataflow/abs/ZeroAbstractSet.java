@@ -19,20 +19,24 @@ public class ZeroAbstractSet {
 	}
 
 	public void setValue(String variable, ZeroAbstractValue value) {
-		this.map.put(variable, value);
+		if (value != null) {
+			this.map.put(variable, value);
+		}
 	}
 
 	public ZeroAbstractSet union(ZeroAbstractSet another) {
-		// Si another es vacio retorno el conjunto this. 
+		ZeroAbstractSet new_map = new ZeroAbstractSet();
+		new_map.putAll(this);
 		for (String key : another.map.keySet()) {
 			if (this.hasValue(key)) {
 				ZeroAbstractValue mergedValue = this.getValue(key).merge(another.getValue(key));
-				this.setValue(key, mergedValue);
-			}
-			else this.setValue(key, another.getValue(key));
+				new_map.setValue(key, mergedValue);
+			} else
+				new_map.setValue(key, another.getValue(key));
 		}
-		another.clear(); // Tengo que limpiar el conjunto viejo? 
-		return this;     // Deberia limpiar los dos viejos y crear uno nuevo? en vez de retornar this?
+		another.clear(); // Tengo que limpiar el conjunto viejo?
+		this.clear();
+		return new_map; // Deberia limpiar los dos viejos y crear uno nuevo? en vez de retornar this?
 	}
 
 	public void clear() {

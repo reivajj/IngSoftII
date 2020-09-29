@@ -18,27 +18,27 @@ public class A {
     return j;
   }
 
-  // public int ejercicio2(int m, int n) {
-  //   int x = n - n;
-  //   int i = x + m;
-  //   int j = m / x;
-  //   return j;
-  // }
+  public int ejercicio2(int m, int n) {
+    int x = n - n;
+    int i = x + m;
+    int j = m / x;
+    return j;
+  }
 
-  // public int ejercicio3(int m, int n) {
-  //   int x = 0;
-  //   if (m != 0) {
-  //     x = m;
-  //   } else {
-  //     x = 1;
-  //   }
-  //   int j = n / x;
-  //   return j;
-  // }
+  public int ejercicio3(int m, int n) {
+    int x = 0;
+    if (m != 0) {
+      x = m;
+    } else {
+      x = 1;
+    }
+    int j = n / x;
+    return j;
+  }
 
-  // public int ejercicio4(int m, int n) {
-  //   int x = 0;
-  //   int j = m / n;
-  //   return j;
-  // }
+  public int ejercicio4(int m, int n) {
+    int x = 0;
+    int j = m / n;
+    return j;
+  }
 }

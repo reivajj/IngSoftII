@@ -2,7 +2,7 @@ package dataflow.abs;
 
 public enum ZeroAbstractValue {
 
-  NOT_ZERO("not-zero"), ZERO("zero"), MAYBE_ZERO("maybe-zero");
+  BOTTOM("bottom"), NOT_ZERO("not-zero"), ZERO("zero"), MAYBE_ZERO("maybe-zero");
 
   private String name;
 
@@ -11,7 +11,7 @@ public enum ZeroAbstractValue {
     return this.name;
   }
 
-  ZeroAbstractValue(final String name) {
+  ZeroAbstractValue(String name) {
     this.name = name;
   }
 
@@ -31,31 +31,13 @@ public enum ZeroAbstractValue {
     }
     return this;
   }
-  
 
-  public ZeroAbstractValue divideBy(final ZeroAbstractValue another) {
-    switch (another){
-      case NOT_ZERO:
-        if(this == NOT_ZERO) return MAYBE_ZERO;  // Consultar bien
-        if(this == ZERO) return ZERO;
-        if(this == MAYBE_ZERO) return MAYBE_ZERO;
-        break;
-      case MAYBE_ZERO:
-        return this;
-        // if(this == NOT_ZERO) return NOT_ZERO;  // Consultar bien
-        // if(this == ZERO) return ZERO;
-        // if(this == MAYBE_ZERO) return MAYBE_ZERO;
-        // break;
-      case ZERO:
-        break;
-      default: throw new UnsupportedOperationException();
-    }
-
-    // QUE HAGO SI ES MAYBE_ZERO o ZERO el DIVISOR? ASUMO QUE NUNCA LE LLEGA? Y SE CHEQUEA EN ZEROVALUEVISITOR?
-    
-    return this;
+  public ZeroAbstractValue divideBy(ZeroAbstractValue another) {
+    if(another == ZERO) return BOTTOM;
+    if(this == ZERO) return ZERO;
+    if(this == MAYBE_ZERO || another == MAYBE_ZERO) return MAYBE_ZERO;
+    return NOT_ZERO;
   }
-  
 
   public ZeroAbstractValue multiplyBy(final ZeroAbstractValue another) {
     switch (this) {
@@ -74,7 +56,6 @@ public enum ZeroAbstractValue {
     }
     return this;
   }
-  
 
   public ZeroAbstractValue substract(final ZeroAbstractValue another) {
     switch (this) {
@@ -97,12 +78,19 @@ public enum ZeroAbstractValue {
     return this;
   }
 
+  // VAN A AGREGAR UNKNOWN (BOTTOM), UNKNOWN Y LO QUE SEA QUEDA LO QUE SEA.
+  // ESTO EN TODAS LAS OPERACIONES
+  // 
+  // EL MERGE DE BOTTOM CON CUALQUEIR COSA DA CUALQUIER COSA, NO BOTTOM
+  // CUANDO DIVIDÍS POR CERO TE DA BOTTOM
+  
   public ZeroAbstractValue merge(final ZeroAbstractValue another) {
-    if (this == MAYBE_ZERO || another == MAYBE_ZERO) return MAYBE_ZERO;
+    if (this == BOTTOM) return another;
+    if (another == BOTTOM) return this;
     if (this == ZERO && another == ZERO) return ZERO;
     if (this == NOT_ZERO && another == NOT_ZERO) return NOT_ZERO;
-    if ((this == ZERO && another == NOT_ZERO) || (this == NOT_ZERO && another == ZERO)) return MAYBE_ZERO;
-    throw new UnsupportedOperationException();
+    // Si hay un MAYBE_ZERO o recibo NOT_ZERO y ZERO retorno MAYBE_ZERO
+    return MAYBE_ZERO;
   }
-  
+
 }

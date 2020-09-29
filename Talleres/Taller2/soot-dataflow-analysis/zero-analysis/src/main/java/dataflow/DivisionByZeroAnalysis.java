@@ -41,7 +41,9 @@ public class DivisionByZeroAnalysis extends ForwardFlowAnalysis<Unit, ZeroAbstra
       }
 
       // Set in flowed values
-      out.setValue(variable.getName(), resolvedValue);
+      if(resolvedValue != null) {
+        out.setValue(variable.getName(), resolvedValue);
+      }
     }
   }
 
@@ -50,10 +52,9 @@ public class DivisionByZeroAnalysis extends ForwardFlowAnalysis<Unit, ZeroAbstra
   }
 
   protected void merge(ZeroAbstractSet input1, ZeroAbstractSet input2, ZeroAbstractSet output) {
-    // TODO
-    output.clear();
-    output.putAll(input1);
-    output.union(input2);
+    ZeroAbstractSet outputAux = input1.union(input2);
+    copy(outputAux, output);
+    input1.clear(); input2.clear();
   }
 
   protected void copy(ZeroAbstractSet source, ZeroAbstractSet dest) {

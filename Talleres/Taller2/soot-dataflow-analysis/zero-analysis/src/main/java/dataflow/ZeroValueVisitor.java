@@ -6,6 +6,7 @@ import dataflow.abs.ZeroAbstractValue;
 import dataflow.abs.ZeroAbstractSet;
 import dataflow.utils.AbstractValueVisitor;
 import dataflow.utils.ValueVisitor;
+import soot.jimple.ParameterRef;
 import soot.Local;
 
 public class ZeroValueVisitor extends AbstractValueVisitor<ZeroAbstractValue> {
@@ -25,17 +26,16 @@ public class ZeroValueVisitor extends AbstractValueVisitor<ZeroAbstractValue> {
     if (set.hasValue(name)){
       resolvedValue = set.getValue(name);
     } else{
-      resolvedValue = null;
+      resolvedValue = ZeroAbstractValue.ZERO;
     }
   }
-
+  
   @Override
   public void visitDivExpression(ZeroAbstractValue leftOperand, ZeroAbstractValue rightOperand) {
     // Tener en cuenta que this.possibleDivisionByZero indica que hay una posible division.
     possibleDivisionByZero = rightOperand == ZeroAbstractValue.ZERO || rightOperand == ZeroAbstractValue.MAYBE_ZERO;
     resolvedValue = leftOperand.divideBy(rightOperand);
   }
-  
 
   @Override
   public void visitMulExpression(ZeroAbstractValue leftOperand, ZeroAbstractValue rightOperand) {
@@ -67,6 +67,11 @@ public class ZeroValueVisitor extends AbstractValueVisitor<ZeroAbstractValue> {
   @Override
   public ValueVisitor cloneVisitor() {
     return new ZeroValueVisitor(set);
+  }
+
+  @Override
+  public void visitParameterRef(ParameterRef parameter) {
+    resolvedValue = ZeroAbstractValue.MAYBE_ZERO;
   }
 
   public Boolean getPossibleDivisionByZero() {
